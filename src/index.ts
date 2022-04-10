@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 
 // Test route
-app.get("/", (_req: any, res: { send: (arg0: string) => any }) => {
+app.get("/", (_req, res) => {
   return res.send("<h3>API server is running</h3>");
 });
 
