@@ -1,6 +1,6 @@
-import express from "express";
+import { Router } from "express";
 
-const rootRouter = express.Router();
+const route = Router();
 
 const rootHTML = `
     <div 
@@ -17,8 +17,10 @@ const rootHTML = `
     </div>
 `;
 
-rootRouter.get("/", (_req, res) => {
-  return res.send(rootHTML);
-});
+export default (app: Router) => {
+  app.use("/", route);
 
-export default rootRouter;
+  app.get("/", (_req, res) => {
+    return res.send(rootHTML);
+  });
+};
