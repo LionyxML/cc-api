@@ -49,7 +49,6 @@ export default ({ app }: { app: express.Application }) => {
 
   app.use(errorHandlerJWT);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const errorHandlerGeneric: ErrorRequestHandler = (err, _req, res, _next) => {
     res.status(err.status || 500);
     res.json({

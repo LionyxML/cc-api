@@ -11,6 +11,6 @@ export const sequelize = new Sequelize(dbName, user, pass, {
 });
 
 export default async () => {
-  await sequelize.sync();
-  // await sequelize.sync({ force: true });
+  // await sequelize.sync();
+  await sequelize.sync({ force: true });
 };
