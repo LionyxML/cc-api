@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-require('dotenv').config();
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
 
 // App INIT
 const app = express();
@@ -8,13 +8,12 @@ const app = express();
 app.use(cors());
 
 // Test route
-app.get("/", (req, res) => {
+app.get("/", (_req: any, res: { send: (arg0: string) => any }) => {
   return res.send("<h3>API server is running</h3>");
 });
 
 // ENV Configs
 const PORT = process.env.PORT || 5050;
-
 
 // APP Listen
 app.listen(PORT, () => {
