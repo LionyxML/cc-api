@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import config from "../config";
+import { sequelize } from "../loaders/sequelize";
 
 class User extends Model {}
 
@@ -22,7 +22,7 @@ const UserModel = User.init(
     },
   },
   {
-    sequelize: config.sequelize,
+    sequelize: sequelize,
     modelName: "user",
     timestamps: false,
   }

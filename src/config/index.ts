@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import { Sequelize } from "sequelize";
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
@@ -24,15 +23,11 @@ export default {
     prefix: "/api",
   },
   mode: process.env.NODE_ENV,
-  sequelize: new Sequelize(
-    isDevMode() ? "test-db" : process.env.DB_NAME || "",
-    isDevMode() ? "admin" : process.env.DB_USER || "",
-    isDevMode() ? "123456" : process.env.DB_PASS || "",
-    {
-      dialect: "sqlite",
-      // host: isDevMode() ? ":memory:" : process.env.DB_PATH || "",
-      host: isDevMode() ? "./dist/db/db.sqlite" : process.env.DB_PATH || "",
-    }
-  ),
+  sequelize: {
+    dbName: isDevMode() ? "test-db" : process.env.DB_NAME || "",
+    user: isDevMode() ? "admin" : process.env.DB_USER || "",
+    pass: isDevMode() ? "123456" : process.env.DB_PASS || "",
+    host: isDevMode() ? "./dist/db/db.sqlite" : process.env.DB_PATH || "",
+  },
   isDevMode: isDevMode,
 };
