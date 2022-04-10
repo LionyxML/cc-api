@@ -13,7 +13,7 @@ export default {
   port: process.env.PORT || "8888",
   logs: {
     level: process.env.LOG_LEVEL || "silly",
-    folder: "logs",
+    folder: "dist/logs",
     infoFile: "info.log",
     errorFile: "error.log",
   },
