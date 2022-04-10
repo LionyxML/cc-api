@@ -3,7 +3,7 @@ import { sequelize } from "../loaders/sequelize";
 
 class User extends Model {}
 
-const UserModel = User.init(
+User.init(
   {
     firstName: {
       type: DataTypes.STRING,
@@ -23,9 +23,9 @@ const UserModel = User.init(
   },
   {
     sequelize: sequelize,
-    modelName: "user",
+    modelName: "User",
     timestamps: false,
   }
 );
 
-export default UserModel;
+export default User;
