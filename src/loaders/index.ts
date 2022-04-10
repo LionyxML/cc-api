@@ -1,6 +1,5 @@
 import expressLoader from "./express";
 import databaseLoader from "./sequelize";
-
 import Logger from "./logger";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

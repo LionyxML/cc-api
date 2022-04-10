@@ -1,10 +1,9 @@
-import { Sequelize } from "sequelize";
 import config from "../config";
+import UserModel from "../models/User";
 
-const { name, user, password, host } = config.db;
+const sequelize = config.sequelize;
 
-export default () =>
-  new Sequelize(name, user, password, {
-    dialect: "sqlite",
-    host: host,
-  });
+export default () => {
+  sequelize.sync({ force: true });
+  UserModel;
+};

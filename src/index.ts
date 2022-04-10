@@ -21,7 +21,6 @@ const startServer = async () => {
 
         🟢  Server port: ${config.port}
         🟢  Server mode: ${config.mode} ${config.isDevMode() ? "🧪" : "🚀"}
-        🟢  DB path    : ${config.db.host}
 #####################################################
     `);
     })
