@@ -9,6 +9,8 @@ if (envFound.error) {
   throw new Error("⚠️  Couldn't find .env file  ⚠️");
 }
 
+const isDevMode = () => process.env.NODE_ENV === "development";
+
 export default {
   port: process.env.PORT || "8888",
   logs: {
@@ -21,4 +23,11 @@ export default {
     prefix: "/api",
   },
   mode: process.env.NODE_ENV,
+  db: {
+    user: isDevMode() ? "admin" : process.env.DB_USER || "",
+    password: isDevMode() ? "123456" : process.env.DB_PASS || "",
+    name: isDevMode() ? "test-db" : process.env.DB_NAME || "",
+    host: isDevMode() ? ":memory:" : process.env.DB_PATH || "",
+  },
+  isDevMode: isDevMode,
 };

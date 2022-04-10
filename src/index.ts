@@ -20,9 +20,8 @@ const startServer = async () => {
         \\____\\____|         /_/   \\_\\_|  |___|
 
         🟢  Server port: ${config.port}
-        🟢  Server mode: ${config.mode} ${
-        config.mode === "production" ? "🚀" : "🧪"
-      }
+        🟢  Server mode: ${config.mode} ${config.isDevMode() ? "🧪" : "🚀"}
+        🟢  DB path    : ${config.db.host}
 #####################################################
     `);
     })
