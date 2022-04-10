@@ -1,13 +1,13 @@
 import "dotenv/config";
 import express from "express";
 import config from "./config";
+import appLoader from "./loaders";
 import LoggerInstance from "./loaders/logger";
 
 const startServer = async () => {
   const app = express();
 
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  await require("./loaders").default({ expressApp: app });
+  await appLoader({ expressApp: app });
 
   app
     .listen(config.port, () => {
@@ -19,8 +19,10 @@ const startServer = async () => {
        | |__| |___  |_____|  / ___ \\|  __/| |
         \\____\\____|         /_/   \\_\\_|  |___|
 
-      🟢  Server listening on port:  ${config.port}
-      🟢  Server is running in mode: ${config.mode}
+        🟢  Server port: ${config.port}
+        🟢  Server mode: ${config.mode} ${
+        config.mode === "production" ? "🚀" : "🧪"
+      }
 #####################################################
     `);
     })

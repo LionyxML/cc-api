@@ -5,10 +5,10 @@ import config from "../config";
 
 export default ({ app }: { app: express.Application }) => {
   // Health Check endpoints
-  app.get("/status", (req, res) => {
+  app.get("/status", (_req, res) => {
     res.status(200).end();
   });
-  app.head("/status", (req, res) => {
+  app.head("/status", (_req, res) => {
     res.status(200).end();
   });
 
@@ -37,7 +37,7 @@ export default ({ app }: { app: express.Application }) => {
   });
 
   /// error handlers
-  const errorHandlerJWT: ErrorRequestHandler = (err, req, res, next) => {
+  const errorHandlerJWT: ErrorRequestHandler = (err, _req, res, next) => {
     /**
      * Handle 401 thrown by express-jwt library
      */
@@ -49,7 +49,8 @@ export default ({ app }: { app: express.Application }) => {
 
   app.use(errorHandlerJWT);
 
-  const errorHandlerGeneric: ErrorRequestHandler = (err, req, res, next) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const errorHandlerGeneric: ErrorRequestHandler = (err, _req, res, _next) => {
     res.status(err.status || 500);
     res.json({
       errors: {
