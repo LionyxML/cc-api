@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require('dotenv').config();
 
 // App INIT
 const app = express();
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 
 // ENV Configs
 const PORT = process.env.PORT || 5050;
+
 
 // APP Listen
 app.listen(PORT, () => {
