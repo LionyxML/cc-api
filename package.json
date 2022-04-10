@@ -1,0 +1,15 @@
+{
+  "name": "cc-api",
+  "version": "1.0.0",
+  "description": "The CC Project API",
+  "main": "index.js",
+  "repository": "https://github.com/LionyxML/cc-api.git",
+  "author": "LionyxML <rahul.juliato@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.17.0",
+    "yarn": ">=1.22.15",
+    "npm": "PLEASE_USE_YARN"
+  }
+}
+
