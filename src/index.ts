@@ -1,17 +1,14 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import { rootRouter } from "./routes";
 
 const PORT = process.env.PORT || 5050;
 const app = express();
 
-app.use(cors());
 app.disable("x-powered-by");
-
-// Test route
-app.get("/", (_req, res) => {
-  return res.send("<h3>API server is running</h3>");
-});
+app.use(cors());
+app.use("/", rootRouter);
 
 app.listen(PORT, () => {
   const welcomeArt = `
