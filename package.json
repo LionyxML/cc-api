@@ -2,7 +2,7 @@
   "name": "cc-api",
   "version": "1.0.0",
   "description": "The CC Project API",
-  "main": "index.js",
+  "main": "./src/index.js",
   "repository": "https://github.com/LionyxML/cc-api.git",
   "author": "LionyxML <rahul.juliato@gmail.com>",
   "license": "MIT",
@@ -12,8 +12,10 @@
     "npm": "PLEASE_USE_YARN"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "prettier": "prettier --check 'src/**/*.{js,jsx,ts,tsx,css,scss,sass}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,scss,sass}'"
   },
   "dependencies": {
     "cors": "^2.8.5",
