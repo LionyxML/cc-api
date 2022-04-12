@@ -16,27 +16,33 @@ export default (app: Router) => {
       passwordConfirmation,
     } = req.body;
 
-    if (password !== passwordConfirmation) {
+    if (Object.keys(req.body).length < 6) {
       return res.status(400).json({
-        msg: "Passwords do not match",
+        status: "error",
+        msg: "All fields must be filled in.",
       });
     }
 
-    User.findOne({ userName: userName }).then((user) => {
-      if (user) {
-        return res.status(400).json({
-          msg: "Username is already taken",
-        });
-      }
-    });
+    if (password !== passwordConfirmation) {
+      return res.status(400).json({
+        status: "error",
+        msg: "Passwords do not match.",
+      });
+    }
 
-    User.findOne({ email: email }).then((user) => {
-      if (user) {
-        return res.status(400).json({
-          msg: "E-mail already registered. Did you forget your pass?",
-        });
-      }
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (await User.findOne({ userName: userName } as any))
+      return res.status(400).json({
+        status: "error",
+        msg: "Username is already taken.",
+      });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (await User.findOne({ email: email } as any))
+      return res.status(400).json({
+        status: "error",
+        msg: "E-mail already registered. Did you forget your pass?",
+      });
 
     const newUser = new User({
       firstName,
@@ -47,12 +53,12 @@ export default (app: Router) => {
       passwordConfirmation,
     });
 
-    newUser.save().then(() => {
+    if (await newUser.save()) {
       return res.status(201).json({
-        success: true,
-        msg: "User is now registered",
+        status: "success",
+        msg: "User is now registered.",
       });
-    });
+    }
   });
 
   app.get("/users", async (req, res) => {
