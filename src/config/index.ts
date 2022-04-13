@@ -30,4 +30,5 @@ export default {
     host: isDevMode() ? "./dist/db/db.sqlite" : process.env.DB_PATH || "",
   },
   isDevMode: isDevMode,
+  salt: process.env.SALT || "10",
 };

@@ -1,5 +1,7 @@
 import { Router } from "express";
+import bcrypt from "bcryptjs";
 import User from "../../models/User";
+import config from "../../config";
 
 const route = Router();
 
@@ -30,15 +32,13 @@ export default (app: Router) => {
       });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if (await User.findOne({ userName: userName } as any))
+    if (await User.findOne({ where: { userName: userName } }))
       return res.status(400).json({
         status: "error",
         msg: "Username is already taken.",
       });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if (await User.findOne({ email: email } as any))
+    if (await User.findOne({ where: { email: email } }))
       return res.status(400).json({
         status: "error",
         msg: "E-mail already registered. Did you forget your pass?",
@@ -50,8 +50,12 @@ export default (app: Router) => {
       userName,
       email,
       password,
-      passwordConfirmation,
     });
+
+    // TODO: is it needed here or can it be "global" ?
+    const salt = await bcrypt.genSalt(Number(config.salt));
+    const hash = await bcrypt.hash(newUser.password, salt);
+    newUser.password = hash;
 
     if (await newUser.save()) {
       return res.status(201).json({
@@ -61,7 +65,7 @@ export default (app: Router) => {
     }
   });
 
-  app.get("/users", async (req, res) => {
+  app.get("/users", async (_req, res) => {
     const users = await User.findAll();
     res.send(users);
   });

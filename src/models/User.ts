@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../loaders/sequelize";
 
-class User extends Model {}
+class User extends Model {
+  firstName: any;
+  lastName: any;
+  userName: any;
+  password: any;
+  email: any;
+}
 
 User.init(
   {
@@ -22,10 +29,6 @@ User.init(
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    passwordConfirmation: {
       type: DataTypes.STRING,
       allowNull: false,
     },
