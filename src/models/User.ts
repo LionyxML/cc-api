@@ -8,6 +8,7 @@ class User extends Model {
   userName: any;
   password: any;
   email: any;
+  id: any;
 }
 
 User.init(

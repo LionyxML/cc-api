@@ -31,4 +31,6 @@ export default {
   },
   isDevMode: isDevMode,
   salt: process.env.SALT || "10",
+  secretKey: process.env.SECRET_KEY, // No fallbacks here
+  jwtExpirationTime: process.env.JWT_EXP_TIMER || 6004800,
 };

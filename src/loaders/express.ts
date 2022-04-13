@@ -1,5 +1,7 @@
 import express, { ErrorRequestHandler } from "express";
 import cors from "cors";
+import passport from "passport";
+import passportConfigs from "../config/passport";
 import routes from "../api/index";
 import config from "../config";
 
@@ -28,6 +30,12 @@ export default ({ app }: { app: express.Application }) => {
   app.use(express.json());
   // Load API routes
   app.use(config.api.prefix, routes());
+
+  // Inits the Passport Middleware
+  app.use(passport.initialize());
+
+  // Defines Passport Strategy
+  passportConfigs(passport);
 
   /// catch 404 and forward to error handler
   app.use((_req, _res, next) => {
