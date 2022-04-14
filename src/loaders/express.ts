@@ -57,7 +57,7 @@ export default ({ app }: { app: express.Application }) => {
 
   app.use(errorHandlerJWT);
 
-  const errorHandlerGeneric: ErrorRequestHandler = (err, _req, res) => {
+  const errorHandlerGeneric: ErrorRequestHandler = (err, _req, res, _next) => {
     res.status(err.status || 500);
     res.json({
       errors: {
