@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 const swaggerAutogen = require("swagger-autogen")();
 
 const outputFile = "./src/swagger/swagger_output.json";
