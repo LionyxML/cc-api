@@ -11,6 +11,7 @@
     "yarn": ">=1.22.15",
     "npm": "PLEASE_USE_YARN"
   },
+  "type": "module",
   "scripts": {
     "start": "tsc && NODE_ENV=\"production\" node ./dist/index.js",
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts",
@@ -18,7 +19,7 @@
     "prettier": "prettier --check 'src/**/*.{js,ts}'",
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "lint": "eslint src",
-    "swagger-autogen": "node src/loaders/swagger.ts"
+    "swagger-autogen": "node src/swagger/swagger.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
