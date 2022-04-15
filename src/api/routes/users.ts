@@ -107,13 +107,55 @@ export default (app: Router) => {
     });
   });
 
+  /**
+   * @swagger
+   * /api/users/profile:
+   *   get:
+   *     summary: get logged user profile data
+   *     description: Retrieve an object with user profile data.
+   *     parameters:
+   *         - name: Authorization
+   *           in: Authorization
+   *           type: string
+   *           required: true
+   *     responses:
+   *       200:
+   *         description: User profile object.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                       id:
+   *                         type: integer
+   *                         description: The user ID.
+   *                         example: 1
+   *                       firstName:
+   *                         type: string
+   *                         description: The user's first name.
+   *                         example: Foosher
+   *                       lastName:
+   *                         type: string
+   *                         description: The user's last name.
+   *                         example: Basher
+   *                       email:
+   *                         type: string
+   *                         description: Uses's e-mail.
+   *                         example: foo@bar.com
+   *                       password:
+   *                         type: string
+   *                         description: Hashed Password.
+   *                         example: -------
+   *       401:
+   *         description: Unauthorized.
+   */
   app.get(
     "/users/profile",
     passport.authenticate("jwt", {
       session: false,
     }),
     (req, res) => {
-      return res.json({
+      return res.status(200).json({
         user: req.user,
       });
     }
