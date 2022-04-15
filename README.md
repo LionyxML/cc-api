@@ -14,15 +14,13 @@ Minimum requirements for "node" and "yarn" are provided inside `package.json`.
 
 Copy `.env_example` to `.env` and fill it in as needed (look for process.env calls inside the code, most if not all are inside `/src/config`).
 
-Server can be run in two modes: `development` and `production`.
+Server can be run in two modes: `development` and `production`:
 
-To run it in production mode:
-`yarn start`
+- production mode: `yarn start`
 
-To run it in development mode:
-`yarn dev`
+- development mode: `yarn dev`
 
-Start making requests to: [http://localhost:5001/api/](http://localhost:5001/api/) (where 5001 is the defalut port you can set in .env)
+Start making requests to [http://localhost:5001/api/](http://localhost:5001/api/) (where 5001 is the defalut port you can set in .env)
 
 ## Logs
 
