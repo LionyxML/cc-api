@@ -67,6 +67,74 @@ export default (app: Router) => {
     }
   });
 
+  /**
+   * @swagger
+   * /api/users/login:
+   *   post:
+   *     summary: Logs in an user
+   *     description: Provided with email and password, logs in user returning a JWT key
+   *     parameters:
+   *         - name: Authorization
+   *           in: header
+   *           type: string
+   *           required: true
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 description: The user's e-mail.
+   *                 example: foo@bar.com
+   *               password:
+   *                 type: string
+   *                 description: The user's password.
+   *                 example: myFunnyCat
+   *     responses:
+   *       200:
+   *         description: User profile object.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                       status:
+   *                         type: string
+   *                         description: the request status: success / error.
+   *                         example: success
+   *                       token:
+   *                         type: string
+   *                         description: Your token bearer for JWT.
+   *                         example: Bearer eyJhbGciOiJIUzI1N
+   *                       user:
+   *                         type: object
+   *                         properties:
+   *                           id:
+   *                              type: integer
+   *                              description: The user ID.
+   *                              example: 1
+   *                           firstName:
+   *                              type: string
+   *                              description: The user's first name.
+   *                              example: Foosher
+   *                           lastName:
+   *                              type: string
+   *                              description: The user's last name.
+   *                              example: Basher
+   *                           email:
+   *                              type: string
+   *                              description: Uses's e-mail.
+   *                              example: foo@bar.com
+   *                           password:
+   *                              type: string
+   *                              description: Hashed Password.
+   *                              example: -------
+   *       401:
+   *         description: Unauthorized.
+   */
   app.post("/users/login", (req, res) => {
     User.findOne({ where: { email: req.body.email } }).then((dbUser) => {
       if (!dbUser) {
