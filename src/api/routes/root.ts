@@ -21,6 +21,11 @@ export default (app: Router) => {
   app.use("/", route);
 
   app.get("/", (_req, res) => {
+    /*
+        #swagger.tags = ['Root']
+        #swagger.summary = "Shows HTML for initial page"
+    */
+
     return res.send(rootHTML);
   });
 };

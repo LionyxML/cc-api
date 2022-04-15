@@ -11,21 +11,12 @@ export default (app: Router) => {
   app.use("/users", route);
 
   app.post("/users/register", async (req, res) => {
-    /*    #swagger.parameters['obj'] = {
+    /*    
+          #swagger.tags = ['Users']
+          #swagger.summary = "Register a user to the system"
+          #swagger.parameters['obj'] = {
                 in: 'body',
                 description: 'Adding new user.'
-          }
-        
-          #swagger.requestBody = {
-              required: true,
-              content: {
-                  "application/json": {
-                      schema: { $ref: "#/definitions/User" },
-                      examples: { 
-                          User: { $ref: "#/components/examples/User" }
-                      }
-                  }
-              }
           }
     } */
 
@@ -86,6 +77,15 @@ export default (app: Router) => {
   });
 
   app.post("/users/login", (req, res) => {
+    /*    
+          #swagger.tags = ['Users']
+          #swagger.summary = "Logs in a registered user"
+          #swagger.parameters['obj'] = {
+                in: 'body',
+                description: 'Adding new user.'
+          }
+    } */
+
     User.findOne({ where: { email: req.body.email } }).then((dbUser) => {
       if (!dbUser) {
         return res.status(404).json({
@@ -131,9 +131,20 @@ export default (app: Router) => {
       session: false,
     }),
     (req, res) => {
-      /* #swagger.security = [{
-               "bearerAuth": []
-        }] */
+      /*
+          #swagger.tags = ['Users']
+          #swagger.summary = "Get loged users profile"
+          #swagger.parameters['Authorization'] = {
+            in: 'header',
+            description: 'A JWT bearer',
+            required: true,
+          }
+          #swagger.responses[200] = {
+            description: 'User successfully obtained.',
+            schema: { $ref: '#/definitions/User' }
+          }
+      */
+
       return res.status(200).json({
         user: req.user,
       });
@@ -141,6 +152,15 @@ export default (app: Router) => {
   );
 
   app.get("/users", async (_req, res) => {
+    /*
+        #swagger.tags = ['Users']
+        #swagger.summary = "Lists all users in database"
+        #swagger.responses[200] = {
+          description: 'Users successfully obtained.',
+          schema: [{ $ref: '#/definitions/User' }]
+        }
+    */
+
     const users = await User.findAll();
     res.send(users);
   });

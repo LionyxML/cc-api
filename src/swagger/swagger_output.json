@@ -9,11 +9,17 @@
   "basePath": "/api",
   "tags": [
     {
-      "name": "",
-      "description": ""
+      "name": "Users",
+      "description": "User administration"
+    },
+    {
+      "name": "Root",
+      "description": "Fallback URL"
     }
   ],
-  "schemes": [],
+  "schemes": [
+    "http"
+  ],
   "securityDefinitions": {
     "bearerAuth": {
       "type": "http",
@@ -21,9 +27,19 @@
       "bearerFormat": "JWT"
     }
   },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/": {
       "get": {
+        "tags": [
+          "Root"
+        ],
+        "summary": "Shows HTML for initial page",
         "description": "",
         "parameters": [],
         "responses": {
@@ -35,6 +51,10 @@
     },
     "/users/register": {
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Register a user to the system",
         "description": "",
         "parameters": [
           {
@@ -73,30 +93,19 @@
           "400": {
             "description": "Bad Request"
           }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/User"
-              },
-              "examples": {
-                "User": {
-                  "$ref": "#/components/examples/User"
-                }
-              }
-            }
-          }
         }
       }
     },
     "/users/login": {
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Logs in a registered user",
         "description": "",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
             "schema": {
               "type": "object",
@@ -108,7 +117,8 @@
                   "example": "any"
                 }
               }
-            }
+            },
+            "description": "Adding new user."
           }
         ],
         "responses": {
@@ -123,27 +133,50 @@
     },
     "/users/profile": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get loged users profile",
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "A JWT bearer",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User successfully obtained.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/users": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lists all users in database",
         "description": "",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Users successfully obtained.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }

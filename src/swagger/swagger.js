@@ -9,15 +9,19 @@ const doc = {
     description: "",
   },
   host: "",
-  basePath: "/api", // by default: '/'
-  schemes: [], // by default: ['http']
-  consumes: [], // by default: ['application/json']
-  produces: [], // by default: ['application/json']
+  basePath: "/api",
+  schemes: ["http"],
+  consumes: ["application/json"],
+  produces: ["application/json"],
   tags: [
     // by default: empty Array
     {
-      name: "", // Tag name
-      description: "", // Tag description
+      name: "Users",
+      description: "User administration",
+    },
+    {
+      name: "Root",
+      description: "Fallback URL",
     },
     // { ... }
   ],
