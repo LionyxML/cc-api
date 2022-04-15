@@ -10,75 +10,25 @@ const route = Router();
 export default (app: Router) => {
   app.use("/users", route);
 
-  /**
-   * @swagger
-   * /api/users/login:
-   *   post:
-   *     summary: Logs in an user
-   *     description: Provided with email and password, logs in user returning a JWT key
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               email:
-   *                 type: string
-   *                 description: The user's e-mail.
-   *                 example: foo@bar.com
-   *               password:
-   *                 type: string
-   *                 description: The user's password.
-   *                 example: myFunnyCat
-   *     responses:
-   *       200:
-   *         description: User profile object.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 user:
-   *                   type: object
-   *                   properties:
-   *                       id:
-   *                         type: integer
-   *                         description: The user ID.
-   *                         example: 1
-   *                       firstName:
-   *                         type: string
-   *                         description: The user's first name.
-   *                         example: Foosher
-   *                       lastName:
-   *                         type: string
-   *                         description: The user's last name.
-   *                         example: Basher
-   *                       email:
-   *                         type: string
-   *                         description: Uses's e-mail.
-   *                         example: foo@bar.com
-   *                       password:
-   *                         type: string
-   *                         description: Hashed Password.
-   *                         example: -------
-   *                 msg:
-   *                   type: string
-   *                   description: A message from the backend
-   *                   example: You're now logged in!
-   *                 status:
-   *                   description: Status message (success/error)
-   *                   type: string
-   *                   example: success
-   *                 token:
-   *                   description: The token Bearer (JWT)
-   *                   type: string
-   *                   example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ..."
-   *
-   *       401:
-   *         description: Unauthorized.
-   */
   app.post("/users/register", async (req, res) => {
+    /*    #swagger.parameters['obj'] = {
+                in: 'body',
+                description: 'Adding new user.'
+          }
+        
+          #swagger.requestBody = {
+              required: true,
+              content: {
+                  "application/json": {
+                      schema: { $ref: "#/definitions/User" },
+                      examples: { 
+                          User: { $ref: "#/components/examples/User" }
+                      }
+                  }
+              }
+          }
+    } */
+
     const {
       firstName,
       lastName,
@@ -135,74 +85,6 @@ export default (app: Router) => {
     }
   });
 
-  /**
-   * @swagger
-   * /api/users/login:
-   *   post:
-   *     summary: Logs in an user
-   *     description: Provided with email and password, logs in user returning a JWT key
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               email:
-   *                 type: string
-   *                 description: The user's e-mail.
-   *                 example: foo@bar.com
-   *               password:
-   *                 type: string
-   *                 description: The user's password.
-   *                 example: myFunnyCat
-   *     responses:
-   *       200:
-   *         description: User profile object.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 user:
-   *                   type: object
-   *                   properties:
-   *                       id:
-   *                         type: integer
-   *                         description: The user ID.
-   *                         example: 1
-   *                       firstName:
-   *                         type: string
-   *                         description: The user's first name.
-   *                         example: Foosher
-   *                       lastName:
-   *                         type: string
-   *                         description: The user's last name.
-   *                         example: Basher
-   *                       email:
-   *                         type: string
-   *                         description: Uses's e-mail.
-   *                         example: foo@bar.com
-   *                       password:
-   *                         type: string
-   *                         description: Hashed Password.
-   *                         example: -------
-   *                 msg:
-   *                   type: string
-   *                   description: A message from the backend
-   *                   example: You're now logged in!
-   *                 status:
-   *                   description: Status message (success/error)
-   *                   type: string
-   *                   example: success
-   *                 token:
-   *                   description: The token Bearer (JWT)
-   *                   type: string
-   *                   example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ..."
-   *
-   *       401:
-   *         description: Unauthorized.
-   */
   app.post("/users/login", (req, res) => {
     User.findOne({ where: { email: req.body.email } }).then((dbUser) => {
       if (!dbUser) {
@@ -243,54 +125,15 @@ export default (app: Router) => {
     });
   });
 
-  /**
-   * @swagger
-   * /api/users/profile:
-   *   get:
-   *     summary: Get logged user profile data
-   *     description: Retrieve an object with user profile data.
-   *     parameters:
-   *         - name: Authorization
-   *           in: Authorization
-   *           type: string
-   *           required: true
-   *     responses:
-   *       200:
-   *         description: User profile object.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                       id:
-   *                         type: integer
-   *                         description: The user ID.
-   *                         example: 1
-   *                       firstName:
-   *                         type: string
-   *                         description: The user's first name.
-   *                         example: Foosher
-   *                       lastName:
-   *                         type: string
-   *                         description: The user's last name.
-   *                         example: Basher
-   *                       email:
-   *                         type: string
-   *                         description: Uses's e-mail.
-   *                         example: foo@bar.com
-   *                       password:
-   *                         type: string
-   *                         description: Hashed Password.
-   *                         example: -------
-   *       401:
-   *         description: Unauthorized.
-   */
   app.get(
     "/users/profile",
     passport.authenticate("jwt", {
       session: false,
     }),
     (req, res) => {
+      /* #swagger.security = [{
+               "bearerAuth": []
+        }] */
       return res.status(200).json({
         user: req.user,
       });
