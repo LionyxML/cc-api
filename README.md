@@ -6,6 +6,8 @@ A base API for registering users and recovering profiles with JWT.
 
 ## Setup
 
+#### Method 1 - On your host system with node and yarn installed
+
 Clone this repo.
 
 Issue `yarn install`.
@@ -21,6 +23,19 @@ Server can be run in two modes: `development` and `production`:
 - development mode: `yarn dev`
 
 Start making requests to [http://localhost:5001/api/](http://localhost:5001/api/) (where 5001 is the defalut port you can set in .env)
+
+#### Method 2 - In a container
+`Dockerfile.dev` and `Dockerfile.prod` are provided for both a Development and Production server respectively.
+
+##### Method 2.1 - Setup 
+Clone this repo.
+
+Run `docker build -f ./Dockerfile.dev -t cc-api:dev .` for building the development image.
+Run `docker run -it --rm -p 5001:5001 cc-api:dev` for running the development image.
+
+Run `docker build -f ./Dockerfile.prod -t cc-api:prod .` for building the production image.
+Run `docker run -it --rm -p 5001:5001 cc-api:prod` for running the production image.
+
 
 ## Logs
 
