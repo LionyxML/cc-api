@@ -4,6 +4,8 @@ CC project - API
 
 A base API for registering users and recovering profiles with JWT.
 
+[![Basic Tests](https://github.com/LionyxML/cc-api/actions/workflows/basic-tests.yml/badge.svg)](https://github.com/LionyxML/cc-api/actions/workflows/basic-tests.yml)
+
 ## Setup
 
 #### Method 1 - On your host system with node and yarn installed
