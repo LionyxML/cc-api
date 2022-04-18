@@ -27,12 +27,22 @@ export default (app: Router) => {
       email,
       password,
       passwordConfirmation,
+      profilePic,
     } = req.body;
 
     if (Object.keys(req.body).length < 6) {
       return res.status(400).json({
         status: "error",
         msg: "All fields must be filled in.",
+      });
+    }
+
+    const sentProfilePicSize = Buffer.from(profilePic.split(",")[1], "base64");
+
+    if (sentProfilePicSize.length > 0) {
+      return res.status(400).json({
+        status: "error",
+        msg: `Profile Pic should not be bigger then ${config.maxProfileSize} bytes. It is ${sentProfilePicSize.length} bytes.`,
       });
     }
 
@@ -61,6 +71,7 @@ export default (app: Router) => {
       userName,
       email,
       password,
+      profilePic,
     });
 
     // TODO: is it needed here or can it be "global" ?

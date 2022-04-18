@@ -80,6 +80,9 @@
                 },
                 "passwordConfirmation": {
                   "example": "any"
+                },
+                "profilePic": {
+                  "example": "any"
                 }
               }
             },

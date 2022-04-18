@@ -4,6 +4,7 @@ import passport from "passport";
 import passportConfigs from "../config/passport";
 import routes from "../api/index";
 import config from "../config";
+import bodyParser from "body-parser";
 
 export default ({ app }: { app: express.Application }) => {
   // Health Check endpoints
@@ -13,6 +14,10 @@ export default ({ app }: { app: express.Application }) => {
   app.head("/status", (_req, res) => {
     res.status(200).end();
   });
+
+  // Limits bodyParser to big files
+  app.use(bodyParser.json({ limit: config.maxJSONSize }));
+  app.use(bodyParser.urlencoded({ limit: config.maxJSONSize, extended: true }));
 
   // A bit of hidenness
   app.disable("x-powered-by");

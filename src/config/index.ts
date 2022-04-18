@@ -13,6 +13,7 @@ const isDevMode = () => process.env.NODE_ENV === "development";
 
 export default {
   port: process.env.PORT || "8888",
+  maxJSONSize: "50mb",
   logs: {
     level: process.env.LOG_LEVEL || "silly",
     folder: "dist/logs",
@@ -33,4 +34,5 @@ export default {
   salt: process.env.SALT || "10",
   secretKey: process.env.SECRET_KEY, // No fallbacks here
   jwtExpirationTime: process.env.JWT_EXP_TIMER || 6004800,
+  maxProfileSize: 2 * 1000 * 1024,
 };

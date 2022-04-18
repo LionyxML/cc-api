@@ -7,6 +7,7 @@ class User extends Model {
   lastName: any;
   userName: any;
   password: any;
+  profilePic: any;
   email: any;
   id: any;
 }
@@ -31,6 +32,10 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    profilePic: {
+      type: DataTypes.BLOB("long"),
       allowNull: false,
     },
   },
