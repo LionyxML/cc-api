@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  cc-api-dev:
+    container_name: cc-api-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - SECRET_KEY="PUT SOMETHING ELSE IN HERE!"

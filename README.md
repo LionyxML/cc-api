@@ -27,14 +27,29 @@ Start making requests to [http://localhost:5001/api/](http://localhost:5001/api/
 #### Method 2 - In a container
 `Dockerfile.dev` and `Dockerfile.prod` are provided for both a Development and Production server respectively.
 
-##### Method 2.1 - Setup 
+##### Method 2.1 - Usual Docker Setup
 Clone this repo.
 
-Run `docker build -f ./Dockerfile.dev -t cc-api:dev .` for building the development image.
-Run `docker run -it --rm -p 5001:5001 cc-api:dev` for running the development image.
+For development:
+- Run `docker build -f ./Dockerfile.dev -t cc-api:dev .` for building the development image.
+- Run `docker run -it --rm -p 5001:5001 cc-api:dev` for running the development image.
 
-Run `docker build -f ./Dockerfile.prod -t cc-api:prod .` for building the production image.
-Run `docker run -it --rm -p 5001:5001 cc-api:prod` for running the production image.
+For production:
+- Run `docker build -f ./Dockerfile.prod -t cc-api:prod .` for building the production image.
+- Run `docker run -it --rm -p 5001:5001 cc-api:prod` for running the production image.
+
+##### Method 2.2 - Using docker-compose
+Clone this repo.
+
+For development:
+- Run `docker-compose -f "docker-compose-dev.yml" up -d --build `
+- When done, run `docker-compose -f "docker-compose-dev.yml" down` to stop the server.
+- If you need to restart the server, run `docker-compose -f "docker-compose-dev.yml" restart`.
+
+For production:
+- Run `docker-compose -f "docker-compose-prod.yml" up -d --build `
+- When done, run `docker-compose -f "docker-compose-prod.yml" down` to stop the server.
+- If you need to restart the server, run `docker-compose -f "docker-compose-prod.yml" restart`.
 
 
 ## Logs
