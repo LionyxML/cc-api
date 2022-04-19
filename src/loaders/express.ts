@@ -42,32 +42,35 @@ export default ({ app }: { app: express.Application }) => {
   // Defines Passport Strategy
   passportConfigs(passport);
 
-  /// catch 404 and forward to error handler
+  // catch 404 and forward to error handler
   app.use((_req, _res, next) => {
     const err = new Error("Not Found");
     Object.assign(err, { status: 404 });
     next(err);
   });
 
-  /// error handlers
+  // error handlers
   const errorHandlerJWT: ErrorRequestHandler = (err, _req, res, next) => {
     /**
      * Handle 401 thrown by express-jwt library
      */
     if (err.name === "UnauthorizedError") {
-      return res.status(err.status).send({ message: err.message }).end();
+      return res
+        .status(err.status)
+        .send({ status: "error", message: err.message })
+        .end();
     }
     return next(err);
   };
 
   app.use(errorHandlerJWT);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const errorHandlerGeneric: ErrorRequestHandler = (err, _req, res, _next) => {
     res.status(err.status || 500);
     res.json({
-      errors: {
-        message: err.message,
-      },
+      status: "error",
+      message: err.message,
     });
   };
 

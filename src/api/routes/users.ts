@@ -39,7 +39,7 @@ export default (app: Router) => {
 
     const sentProfilePicSize = Buffer.from(profilePic.split(",")[1], "base64");
 
-    if (sentProfilePicSize.length > 0) {
+    if (sentProfilePicSize.length > config.maxProfileSize) {
       return res.status(400).json({
         status: "error",
         msg: `Profile Pic should not be bigger then ${config.maxProfileSize} bytes. It is ${sentProfilePicSize.length} bytes.`,
