@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../loaders/sequelize";
+import Certificate from "./Certificate";
 
 class User extends Model {
   firstName: any;
@@ -45,5 +46,8 @@ User.init(
     timestamps: false,
   }
 );
+
+User.hasMany(Certificate);
+Certificate.belongsTo(User);
 
 export default User;
