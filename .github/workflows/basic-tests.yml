@@ -26,4 +26,5 @@ jobs:
       - run: yarn prettier
       - run: yarn lint
       - run: yarn build
+      - run: touch .env.test
       - run: yarn test-unit
