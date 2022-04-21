@@ -79,12 +79,20 @@ export default (app: Router) => {
     const hash = await bcrypt.hash(newUser.password, salt);
     newUser.password = hash;
 
-    if (await newUser.save()) {
-      return res.status(201).json({
-        status: "success",
-        msg: "User is now registered.",
-      });
-    }
+    await newUser
+      .save()
+      .then(() => {
+        return res.status(201).json({
+          status: "success",
+          msg: "User is now registered.",
+        });
+      })
+      .catch(() =>
+        res.status(400).json({
+          status: "error",
+          msg: "Error on saving... contact sys admin",
+        })
+      );
   });
 
   app.post("/users/login", (req, res) => {

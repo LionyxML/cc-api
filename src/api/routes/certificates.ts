@@ -54,7 +54,7 @@ export default (app: Router) => {
         UserId: userId?.id,
       });
 
-      newCertificate
+      await newCertificate
         .save()
         .then(() => {
           return res.status(201).json({
@@ -62,10 +62,10 @@ export default (app: Router) => {
             msg: "Certificate is uploaded.",
           });
         })
-        .catch((error) =>
+        .catch(() =>
           res.status(400).json({
             status: "error",
-            msg: error,
+            msg: "Error on saving... contact sys admin",
           })
         );
     }
