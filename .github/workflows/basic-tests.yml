@@ -27,3 +27,5 @@ jobs:
       - run: yarn lint
       - run: yarn build
       - run: yarn test-unit
+        env:
+          SECRET_KEY: SOMETHING SOMETHING OTHER THEN THIS
