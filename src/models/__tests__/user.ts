@@ -2,15 +2,9 @@ import { faker } from "@faker-js/faker";
 import User from "../User";
 
 import db from "../../loaders/sequelize";
-import Logger from "../../loaders/logger";
 
 beforeAll(async () => {
   await db();
-  Logger.silent = true;
-});
-
-afterAll(() => {
-  Logger.silent = false;
 });
 
 // Since validations are not inside Models, but inside routes/controllers,
