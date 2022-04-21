@@ -67,8 +67,7 @@ export default ({ app }: { app: express.Application }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const errorHandlerGeneric: ErrorRequestHandler = (err, _req, res, _next) => {
-    res.status(err.status || 500);
-    res.json({
+    res.status(err.status || 500).json({
       status: "error",
       message: err.message,
     });

@@ -35,4 +35,5 @@ export default {
   secretKey: process.env.SECRET_KEY, // No fallbacks here
   jwtExpirationTime: process.env.JWT_EXP_TIMER || 6004800,
   maxProfileSize: process.env.MAX_PROFILE_PIC_SIZE || 2 * 1000 * 1024,
+  maxCertificateSize: process.env.MAX_CERTIFICATE_SIZE || 1 * 1000 * 1024,
 };
