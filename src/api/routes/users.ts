@@ -160,7 +160,6 @@ export default (app: Router) => {
           }
           #swagger.responses[200] = {
             description: 'User successfully obtained.',
-            schema: { $ref: '#/definitions/User' }
           }
       */
 
@@ -176,8 +175,6 @@ export default (app: Router) => {
         #swagger.summary = "Lists all users in database"
         #swagger.responses[200] = {
           description: 'Users successfully obtained.',
-          schema: [{ $ref: '#/definitions/User' }]
-        }
     */
 
     const users = await User.findAll();

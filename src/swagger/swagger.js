@@ -23,6 +23,10 @@ const doc = {
       name: "Root",
       description: "Fallback URL",
     },
+    {
+      name: "Certificates",
+      description: "Certificates post/retrieve",
+    },
     // { ... }
   ],
   securityDefinitions: {
@@ -55,6 +59,27 @@ const doc = {
         password: {
           type: "string",
         },
+        profilePic: {
+          type: "string",
+          format: "binary",
+        },
+      },
+    },
+    Certificate: {
+      type: "object",
+      properties: {
+        id: {
+          type: "integer",
+          format: "int64",
+        },
+        certificate: {
+          type: "string",
+          format: "binary",
+        },
+        userId: {
+          type: "integer",
+          format: "int64",
+        },
       },
     },
   }, // by default: empty object (Swagger 2.0)
@@ -62,11 +87,20 @@ const doc = {
     examples: {
       User: {
         value: {
+          id: 1,
           firstName: "foo",
           lastName: "bar",
           username: "foobar",
           email: "foo@bar.com",
           password: "foobarium",
+          profilePic: "...base64 encoded image...",
+        },
+      },
+      Certificate: {
+        value: {
+          id: 1,
+          certificate: "...base64 encoded certificate...",
+          userId: 1,
         },
       },
     },
@@ -77,6 +111,7 @@ const outputFile = "./src/swagger/swagger_output.json";
 const endpointsFiles = [
   "./src/api/routes/root.ts",
   "./src/api/routes/users.ts",
+  "./src/api/routes/certificates.ts",
 ];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

@@ -15,6 +15,10 @@
     {
       "name": "Root",
       "description": "Fallback URL"
+    },
+    {
+      "name": "Certificates",
+      "description": "Certificates post/retrieve"
     }
   ],
   "schemes": [
@@ -152,10 +156,7 @@
         ],
         "responses": {
           "200": {
-            "description": "User successfully obtained.",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
+            "description": "User successfully obtained."
           }
         }
       }
@@ -170,16 +171,75 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Users successfully obtained.",
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/certificates/upload": {
+      "post": {
+        "tags": [
+          "Certificates"
+        ],
+        "summary": "Uploads a certificate",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              },
-              "xml": {
-                "name": "main"
+              "type": "object",
+              "properties": {
+                "certificate": {
+                  "example": "any"
+                }
               }
-            }
+            },
+            "description": "Uploads a new certificate."
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/certificates/list": {
+      "get": {
+        "tags": [
+          "Certificates"
+        ],
+        "summary": "Get logged in user's certificates",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "A JWT bearer",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificates listed."
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -253,6 +313,72 @@
                   "example": "string"
                 }
               }
+            },
+            "profilePic": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Certificate": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "int64"
+                }
+              }
+            },
+            "certificate": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "binary"
+                }
+              }
+            },
+            "userId": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "int64"
+                }
+              }
             }
           }
         }
@@ -263,11 +389,20 @@
     "examples": {
       "User": {
         "value": {
+          "id": 1,
           "firstName": "foo",
           "lastName": "bar",
           "username": "foobar",
           "email": "foo@bar.com",
-          "password": "foobarium"
+          "password": "foobarium",
+          "profilePic": "...base64 encoded image..."
+        }
+      },
+      "Certificate": {
+        "value": {
+          "id": 1,
+          "certificate": "...base64 encoded certificate...",
+          "userId": 1
         }
       }
     }

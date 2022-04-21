@@ -77,7 +77,7 @@ export default (app: Router) => {
       session: false,
     }),
     async (req, res) => {
-      /*  TODO: fix it here
+      /*  
           #swagger.tags = ['Certificates']
           #swagger.summary = "Get logged in user's certificates"
           #swagger.parameters['Authorization'] = {
@@ -110,6 +110,6 @@ export default (app: Router) => {
           msg: "Error on getting certificates.",
         });
       }
-    } // async
+    }
   );
 };
