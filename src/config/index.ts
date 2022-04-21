@@ -10,6 +10,7 @@ if (envFound.error) {
 }
 
 const isDevMode = () => process.env.NODE_ENV === "development";
+const isTestMode = () => process.env.NODE_ENV === "test";
 
 export default {
   port: process.env.PORT || "8888",
@@ -31,6 +32,7 @@ export default {
     host: isDevMode() ? "./dist/db/db.sqlite" : process.env.DB_PATH || "",
   },
   isDevMode: isDevMode,
+  isTestMode: isTestMode,
   salt: process.env.SALT || "10",
   secretKey: process.env.SECRET_KEY, // No fallbacks here
   jwtExpirationTime: process.env.JWT_EXP_TIMER || 6004800,

@@ -11,6 +11,7 @@ class User extends Model {
   profilePic: any;
   email: any;
   id: any;
+  createdAt: any;
 }
 
 User.init(
@@ -26,14 +27,22 @@ User.init(
     userName: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: [8, 100],
+      },
     },
     profilePic: {
       type: DataTypes.BLOB("long"),
@@ -43,7 +52,7 @@ User.init(
   {
     sequelize: sequelize,
     modelName: "User",
-    timestamps: false,
+    timestamps: true,
   }
 );
 

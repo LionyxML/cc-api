@@ -87,10 +87,10 @@ export default (app: Router) => {
           msg: "User is now registered.",
         });
       })
-      .catch(() =>
+      .catch((error) =>
         res.status(400).json({
           status: "error",
-          msg: "Error on saving... contact sys admin",
+          msg: error.message,
         })
       );
   });
@@ -170,7 +170,7 @@ export default (app: Router) => {
   );
 
   app.get("/users", async (_req, res) => {
-    /*
+    /*  // TODO: debug only, this should not be here
         #swagger.tags = ['Users']
         #swagger.summary = "Lists all users in database"
         #swagger.responses[200] = {

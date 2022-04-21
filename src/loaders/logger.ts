@@ -27,6 +27,7 @@ const LoggerInstance = winston.createLogger({
     winston.format.splat(),
     winston.format.json()
   ),
+  silent: config.isTestMode(),
   transports: [
     ...transports,
     new winston.transports.File({
