@@ -19,7 +19,7 @@
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "lint": "eslint src",
     "swagger-autogen": "node src/swagger/swagger.js",
-    "test-unit": "ENV_FILE=.env.test jest"
+    "test-unit": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
