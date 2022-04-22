@@ -7,8 +7,8 @@ beforeAll(async () => {
   await db();
 });
 
-// Since validations are not inside Models, but inside routes/controllers,
-// this test is simplified.
+// Since not all validations are inside Models, but also inside routes/controllers,
+// this tests are a bit simplified.
 describe("db: save", () => {
   it("should create an user", async () => {
     const email = faker.internet.email();

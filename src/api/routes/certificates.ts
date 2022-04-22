@@ -28,7 +28,7 @@ export default (app: Router) => {
           }
     } */
 
-      const { certificate } = req.body;
+      const { fileName, certificate } = req.body;
 
       const certificateSize = Buffer.from(certificate.split(",")[1], "base64");
 
@@ -39,17 +39,22 @@ export default (app: Router) => {
         });
       }
 
-      if (await Certificate.findOne({ where: { certificate: certificate } }))
-        return res.status(400).json({
-          status: "error",
-          msg: "Certificate already uploaded.",
-        });
-
       const userId = jwt.decode(
         req.headers.authorization?.split(" ")[1] || ""
       ) as userIdType;
 
+      if (
+        await Certificate.findOne({
+          where: { certificate: certificate, UserId: Number(userId) },
+        })
+      )
+        return res.status(400).json({
+          status: "error",
+          msg: "User already has this certificate uploaded.",
+        });
+
       const newCertificate = new Certificate({
+        fileName: fileName,
         certificate: certificate,
         UserId: userId?.id,
       });
@@ -140,13 +145,13 @@ export default (app: Router) => {
           req.headers.authorization?.split(" ")[1] || ""
         ) as userIdType;
 
-        await Certificate.destroy({
+        const rowsDeleted = await Certificate.destroy({
           where: { id: req.params.id, UserId: userId?.id },
         });
 
         return res.status(200).json({
           status: "success",
-          msg: "Certificate deleted.",
+          msg: `Certificate deleted: ${rowsDeleted} matche(s)`,
         });
       } catch {
         return res.status(400).json({
