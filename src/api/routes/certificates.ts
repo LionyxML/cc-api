@@ -112,4 +112,48 @@ export default (app: Router) => {
       }
     }
   );
+
+  app.delete(
+    "/certificates/delete/:id",
+    passport.authenticate("jwt", {
+      session: false,
+    }),
+    async (req, res) => {
+      /*  
+          #swagger.tags = ['Certificates']
+          #swagger.summary = "Delete a certificate"
+          #swagger.parameters['Authorization'] = {
+            in: 'header',
+            description: 'A JWT bearer',
+            required: true,
+          }
+          #swagger.responses[200] = {
+            description: 'Certificate deleted.',
+          }
+          #swagger.responses[400] = {
+            description: 'Error on deleting certificate.',
+          }
+      */
+
+      try {
+        const userId = jwt.decode(
+          req.headers.authorization?.split(" ")[1] || ""
+        ) as userIdType;
+
+        await Certificate.destroy({
+          where: { id: req.params.id, UserId: userId?.id },
+        });
+
+        return res.status(200).json({
+          status: "success",
+          msg: "Certificate deleted.",
+        });
+      } catch {
+        return res.status(400).json({
+          status: "error",
+          msg: "Error on getting certificates.",
+        });
+      }
+    }
+  );
 };
