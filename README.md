@@ -1,6 +1,5 @@
-# cc-api
-
-CC project - API
+# CC API
+[![Tests](https://github.com/LionyxML/cc-api/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/LionyxML/cc-api/actions/workflows/tests.yml)
 
 A base API for registering users and recovering profiles with JWT.
 
@@ -13,9 +12,6 @@ Features:
 - Docker
 - Jest
 - Winston
-
-
-[![Tests](https://github.com/LionyxML/cc-api/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/LionyxML/cc-api/actions/workflows/tests.yml)
 
 ## Setup
 
