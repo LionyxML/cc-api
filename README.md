@@ -4,11 +4,22 @@ CC project - API
 
 A base API for registering users and recovering profiles with JWT.
 
+Features:
+- Node.js
+- Express
+- Typescript
+- Sequelize
+- Swagger
+- Docker
+- Jest
+- Winston
+
+
 [![Tests](https://github.com/LionyxML/cc-api/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/LionyxML/cc-api/actions/workflows/tests.yml)
 
 ## Setup
 
-#### Method 1 - On your host system with node and yarn installed
+### Method 1 - On your host system with node and yarn installed
 
 Clone this repo.
 
@@ -26,13 +37,13 @@ Server can be run in two modes: `development` and `production`:
 
 Start making requests to [http://localhost:5001/api/](http://localhost:5001/api/) (where 5001 is the defalut port you can set in .env)
 
-#### Method 2 - In a container
+### Method 2 - In a container
 
 `Dockerfile.dev` and `Dockerfile.prod` are provided for both a Development and Production server respectively.
 
-##### Method 2.1 - Usual Docker Setup
+Clone this repo and follow the instructions for creating the `.env` file on method 1.
 
-Clone this repo.
+#### Method 2.1 - Usual Docker Setup
 
 For development:
 
@@ -44,17 +55,15 @@ For production:
 - Run `docker build -f ./Dockerfile.prod -t cc-api:prod .` for building the production image.
 - Run `docker run -it --rm -p 5001:5001 cc-api:prod` for running the production image.
 
-##### Method 2.2 - Using docker-compose
+#### Method 2.2 - Using docker-compose
 
-Clone this repo.
-
-For development:
+Development mode:
 
 - Run `docker-compose -f "docker-compose-dev.yml" up -d --build `
 - When done, run `docker-compose -f "docker-compose-dev.yml" down` to stop the server.
 - If you need to restart the server, run `docker-compose -f "docker-compose-dev.yml" restart`.
 
-For production:
+Production mode:
 
 - Run `docker-compose -f "docker-compose-prod.yml" up -d --build `
 - When done, run `docker-compose -f "docker-compose-prod.yml" down` to stop the server.
@@ -62,11 +71,13 @@ For production:
 
 ## Logs
 
-You can check for logs in `/dist/logs/`
+You can check for logs inside the  `/dist/logs/` folder.
 
 ## Swagger
 
-Swagger is auto-generated with some minor manual notations, but the scripts that generates it
-must be run manually with `yarn swagger-autogen`.
+The swagger file (`src/swagger/swagger_output.json`) is auto-generated with some minor manual 
+notations. The auto-gen script must be run manually with `yarn swagger-autogen`.
 
-After server is up and running in either `development` or `production` mode you can access it from [http://localhost:5001/api/docs](http://localhost:5001/api/docs).
+After server is up and running in either `development` or `production` mode you can access the
+swagger page served from [http://localhost:5001/api/docs](http://localhost:5001/api/docs).
+
