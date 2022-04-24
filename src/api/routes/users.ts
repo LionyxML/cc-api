@@ -79,20 +79,12 @@ export default (app: Router) => {
     const hash = await bcrypt.hash(newUser.password, salt);
     newUser.password = hash;
 
-    await newUser
-      .save()
-      .then(() => {
-        return res.status(201).json({
-          status: "success",
-          msg: "User is now registered.",
-        });
-      })
-      .catch((error) =>
-        res.status(400).json({
-          status: "error",
-          msg: error.message,
-        })
-      );
+    await newUser.save().then(() => {
+      return res.status(201).json({
+        status: "success",
+        msg: "User is now registered.",
+      });
+    });
   });
 
   app.post("/users/login", (req, res) => {
@@ -169,15 +161,15 @@ export default (app: Router) => {
     }
   );
 
-  app.get("/users", async (_req, res) => {
-    /*  // TODO: debug only, this should not be here
-        #swagger.tags = ['Users']
-        #swagger.summary = "Lists all users in database"
-        #swagger.responses[200] = {
-          description: 'Users successfully obtained.',
-    */
+  // app.get("/users", async (_req, res) => {
+  //   /*  // TODO: debug only, this should not be here
+  //       #swagger.tags = ['Users']
+  //       #swagger.summary = "Lists all users in database"
+  //       #swagger.responses[200] = {
+  //         description: 'Users successfully obtained.',
+  //   */
 
-    const users = await User.findAll();
-    res.send(users);
-  });
+  //   const users = await User.findAll();
+  //   res.send(users);
+  // });
 };

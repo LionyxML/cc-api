@@ -40,7 +40,7 @@ describe("POST /users/register", () => {
       );
   });
 
-  it("should return 400 & valid error response to profile pic bigger then allowed", function (done) {
+  it("should return 400 if bigger profile picture then allowed", function (done) {
     request(app)
       .post(`${apiPrefix}/users/register`)
       .send({
@@ -224,6 +224,50 @@ describe("POST /users/login", () => {
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(200, /"status":"success"/, done);
+      });
+  });
+});
+
+describe("GET /users/profile", () => {
+  it("should return 401 for missing JWT Bearer", function (done) {
+    request(app)
+      .get(`${apiPrefix}/users/profile`)
+      .set("Accept", "application/json")
+      .expect(401, /Unauthorized/, done);
+  });
+
+  it("should return 201 when users logged in with valid JWT", function (done) {
+    request(app)
+      .post(`${apiPrefix}/users/register`)
+      .send({
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        userName: faker.internet.userName(),
+        email: "foo@bar.net",
+        password: "123123123",
+        passwordConfirmation: "123123123",
+        profilePic: imageAllowed,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(201, /User is now registered/)
+      .end(function () {
+        request(app)
+          .post(`${apiPrefix}/users/login`)
+          .send({
+            email: "foo@bar.net",
+            password: "123123123",
+          })
+          .set("Accept", "application/json")
+          .expect("Content-Type", /json/)
+          .expect(200, /"status":"success"/)
+          .end(function (_error, response) {
+            request(app)
+              .get(`${apiPrefix}/users/profile`)
+              .set("Accept", "application/json")
+              .set("Authorization", response.body.token)
+              .expect(200, done);
+          });
       });
   });
 });
