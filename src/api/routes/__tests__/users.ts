@@ -23,8 +23,8 @@ beforeAll(async () => {
   await appLoader({ expressApp: app });
 });
 
-describe("POST /users", () => {
-  it("must have all fields filled in", function (done) {
+describe("POST /users/register", () => {
+  it("should return 400 if fields are not all filled", function (done) {
     request(app)
       .post(`${apiPrefix}/users/register`)
       .send({})
@@ -154,6 +154,76 @@ describe("POST /users", () => {
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(400, /E-mail already registered/, done);
+      });
+  });
+});
+
+describe("POST /users/login", () => {
+  it("should return 404 for unknown user attempt to login", function (done) {
+    request(app)
+      .post(`${apiPrefix}/users/login`)
+      .send({
+        email: "a_fake@_email_that_does_not_exist.com",
+        password: "123123123",
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, /Username not found/, done);
+  });
+
+  it("should return 404 for incorrect password", function (done) {
+    request(app)
+      .post(`${apiPrefix}/users/register`)
+      .send({
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        userName: faker.internet.userName(),
+        email: "foo@bar.net",
+        password: "123123123",
+        passwordConfirmation: "123123123",
+        profilePic: imageAllowed,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(201, /User is now registered/)
+      .end(function () {
+        request(app)
+          .post(`${apiPrefix}/users/login`)
+          .send({
+            email: "foo@bar.net",
+            password: "1231231233",
+          })
+          .set("Accept", "application/json")
+          .expect("Content-Type", /json/)
+          .expect(404, /Incorrect password/, done);
+      });
+  });
+
+  it("should return 201 for proper login", function (done) {
+    request(app)
+      .post(`${apiPrefix}/users/register`)
+      .send({
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        userName: faker.internet.userName(),
+        email: "foo@bar.net",
+        password: "123123123",
+        passwordConfirmation: "123123123",
+        profilePic: imageAllowed,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(201, /User is now registered/)
+      .end(function () {
+        request(app)
+          .post(`${apiPrefix}/users/login`)
+          .send({
+            email: "foo@bar.net",
+            password: "123123123",
+          })
+          .set("Accept", "application/json")
+          .expect("Content-Type", /json/)
+          .expect(200, /"status":"success"/, done);
       });
   });
 });
