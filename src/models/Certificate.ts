@@ -23,6 +23,10 @@ Certificate.init(
       type: DataTypes.BLOB("long"),
       allowNull: false,
     },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize: sequelize,

@@ -26,7 +26,7 @@ describe("db: save", () => {
     const before = Date.now();
 
     const certificate = new Certificate({
-      userId: user.id,
+      UserId: user.id,
       fileName: faker.system.fileName(),
       certificate: faker.image.cats(),
     });
@@ -54,7 +54,7 @@ describe("db: save", () => {
       await user.save();
 
       const certificate = new Certificate({
-        userId: user.id,
+        UserId: user.id,
         certificate: faker.image.cats(),
       });
 
@@ -74,7 +74,7 @@ describe("db: save", () => {
     await user.save();
 
     const certificate = new Certificate({
-      userId: user.id,
+      UserId: user.id,
       fileName: "R".repeat(
         Number(config.minFileNameSize > 0 ? config.minFileNameSize : 1) - 1
       ),
@@ -97,7 +97,7 @@ describe("db: save", () => {
     await user.save();
 
     const certificate = new Certificate({
-      userId: user.id,
+      UserId: user.id,
       fileName: "R".repeat(Number(config.maxFileNameSize) + 1),
       certificate: faker.image.cats(),
     });
@@ -106,15 +106,81 @@ describe("db: save", () => {
       /len on fileName failed/
     );
   });
+  it("should not save a certificate if no file is provided", async () => {
+    const user = new User({
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      userName: faker.internet.userName(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      profilePic: faker.image.avatar(),
+    });
+    await user.save();
+
+    const certificate = new Certificate({
+      UserId: user.id,
+      fileName: faker.system.fileName(),
+    });
+
+    await expect(certificate.save()).rejects.toThrowError(
+      /certificate cannot be null/
+    );
+  });
+  it("should not save a certificate if no userId is provided", async () => {
+    const user = new User({
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      userName: faker.internet.userName(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      profilePic: faker.image.avatar(),
+    });
+    await user.save();
+
+    const certificate = new Certificate({
+      fileName: faker.system.fileName(),
+      certificate: faker.image.cats(),
+    });
+
+    await expect(certificate.save()).rejects.toThrowError(
+      /UserId cannot be null/
+    );
+  });
+  it("should delete an existing certificate", async () => {
+    const user = new User({
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      userName: faker.internet.userName(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      profilePic: faker.image.avatar(),
+    });
+    await user.save();
+
+    const certificate = new Certificate({
+      UserId: user.id,
+      fileName: faker.system.fileName(),
+      certificate: faker.image.cats(),
+    });
+
+    await certificate.save();
+
+    await expect(
+      Certificate.destroy({
+        where: {
+          id: certificate.id,
+        },
+      })
+    ).resolves.not.toThrowError();
+  });
 
   // TODO: tests
   // X save with no filename
   // X save with less then minFileNameSize
   // X save with more then maxFileNameSize
-  // - save with a missing field
-  // - save two of the same entry for user
-  // - save two equal filenames for user
-  // - delete a file
-  // - delete another user file ?
-  // - delete inexistent file
+  // X save with a missing field
+  // X delete a file
+  // - delete another user file - will be done inside router
+  // - delete inexistent file - will be done inside router
+  // - save two equal filenames for user - will be done inside de router
 });
