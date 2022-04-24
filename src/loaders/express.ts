@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import express, { ErrorRequestHandler } from "express";
 import cors from "cors";
 import passport from "passport";

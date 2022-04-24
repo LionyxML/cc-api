@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { ExtractJwt, Strategy } from "passport-jwt";
 import User from "../models/User";
 import config from ".";
