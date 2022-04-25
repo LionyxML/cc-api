@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import config from "../config";
 import Logger from "./logger";
 import { Sequelize } from "sequelize";
@@ -12,5 +13,5 @@ export const sequelize = new Sequelize(dbName, user, pass, {
 
 export default async () => {
   // await sequelize.sync();
-  await sequelize.sync({ force: true });
+  if (config.isDevMode()) await sequelize.sync({ force: true });
 };

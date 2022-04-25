@@ -79,12 +79,22 @@ export default (app: Router) => {
     const hash = await bcrypt.hash(newUser.password, salt);
     newUser.password = hash;
 
-    await newUser.save().then(() => {
-      return res.status(201).json({
-        status: "success",
-        msg: "User is now registered.",
-      });
-    });
+    await newUser
+      .save()
+      .then(() => {
+        return res.status(201).json({
+          status: "success",
+          msg: "User is now registered.",
+        });
+      })
+      .catch(
+        /* istanbul ignore next */ (err) => {
+          return res.status(500).json({
+            status: "error",
+            msg: err.message,
+          });
+        }
+      );
   });
 
   app.post("/users/login", (req, res) => {
