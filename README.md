@@ -13,7 +13,7 @@ Features:
 - Jest
 - Winston
 
-## Setup
+## Setup and Launch
 
 ### Method 1 - On your host system with node and yarn installed
 
