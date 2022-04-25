@@ -99,6 +99,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -161,21 +164,6 @@
         }
       }
     },
-    "/users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Lists all users in database",
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/certificates/upload": {
       "post": {
         "tags": [
@@ -195,6 +183,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "fileName": {
+                  "example": "any"
+                },
                 "certificate": {
                   "example": "any"
                 }
@@ -240,6 +231,43 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/certificates/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Certificates"
+        ],
+        "summary": "Delete a certificate",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "A JWT bearer",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate deleted."
+          },
+          "400": {
+            "description": "Error on deleting certificate."
           }
         }
       }
