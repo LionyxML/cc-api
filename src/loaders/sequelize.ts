@@ -13,5 +13,6 @@ export const sequelize = new Sequelize(dbName, user, pass, {
 
 export default async () => {
   // await sequelize.sync();
-  if (config.isDevMode()) await sequelize.sync({ force: true });
+  if (config.isDevMode() || config.isTestMode())
+    await sequelize.sync({ force: true });
 };
