@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export { default as rootRouter } from "./routes/root";
 import { Router } from "express";
 import rootRouter from "./routes/root";

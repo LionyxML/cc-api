@@ -45,12 +45,12 @@ export default (app: Router) => {
 
       if (
         await Certificate.findOne({
-          where: { certificate: certificate, UserId: Number(userId) },
+          where: { fileName: fileName || "" },
         })
       )
         return res.status(400).json({
           status: "error",
-          msg: "User already has this certificate uploaded.",
+          msg: "User already have a certificate with this filename.",
         });
 
       const newCertificate = new Certificate({
@@ -67,11 +67,12 @@ export default (app: Router) => {
             msg: "Certificate is uploaded.",
           });
         })
-        .catch(() =>
-          res.status(400).json({
-            status: "error",
-            msg: "Error on saving... contact sys admin",
-          })
+        .catch(
+          /* istanbul ignore next */ () =>
+            res.status(400).json({
+              status: "error",
+              msg: "Error on saving... contact sys admin",
+            })
         );
     }
   );
@@ -110,10 +111,11 @@ export default (app: Router) => {
           certificates: certificates,
         });
       } catch {
-        return res.status(400).json({
-          status: "error",
-          msg: "Error on getting certificates.",
-        });
+        /* istanbul ignore next */ () =>
+          res.status(400).json({
+            status: "error",
+            msg: "Error on getting certificates.",
+          });
       }
     }
   );
@@ -154,10 +156,12 @@ export default (app: Router) => {
           msg: `Certificate deleted: ${rowsDeleted} matche(s)`,
         });
       } catch {
-        return res.status(400).json({
-          status: "error",
-          msg: "Error on getting certificates.",
-        });
+        /* istanbul ignore next */ () => {
+          res.status(400).json({
+            status: "error",
+            msg: "Error on deleting certificates",
+          });
+        };
       }
     }
   );

@@ -173,14 +173,4 @@ describe("db: save", () => {
       })
     ).resolves.not.toThrowError();
   });
-
-  // TODO: tests
-  // X save with no filename
-  // X save with less then minFileNameSize
-  // X save with more then maxFileNameSize
-  // X save with a missing field
-  // X delete a file
-  // - delete another user file - will be done inside router
-  // - delete inexistent file - will be done inside router
-  // - save two equal filenames for user - will be done inside de router
 });
