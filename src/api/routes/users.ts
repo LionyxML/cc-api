@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../../models/User";
 import config from "../../config";
 import passport from "passport";
+import LoggerInstance from "../../loaders/logger";
 
 const route = Router();
 
@@ -30,71 +31,84 @@ export default (app: Router) => {
       profilePic,
     } = req.body;
 
-    if (Object.keys(req.body).length < 6) {
-      return res.status(400).json({
-        status: "error",
-        msg: "All fields must be filled in.",
-      });
-    }
+    console.log("recebido:", req.body);
 
-    const sentProfilePicSize = Buffer.from(profilePic.split(",")[1], "base64");
-
-    if (sentProfilePicSize.length > config.maxProfileSize) {
-      return res.status(400).json({
-        status: "error",
-        msg: `Profile Pic should not be bigger then ${config.maxProfileSize} bytes. It is ${sentProfilePicSize.length} bytes.`,
-      });
-    }
-
-    if (password !== passwordConfirmation) {
-      return res.status(400).json({
-        status: "error",
-        msg: "Passwords do not match.",
-      });
-    }
-
-    if (await User.findOne({ where: { userName: userName } }))
-      return res.status(400).json({
-        status: "error",
-        msg: "Username is already taken.",
-      });
-
-    if (await User.findOne({ where: { email: email } }))
-      return res.status(400).json({
-        status: "error",
-        msg: "E-mail already registered. Did you forget your pass?",
-      });
-
-    const newUser = new User({
-      firstName,
-      lastName,
-      userName,
-      email,
-      password,
-      profilePic,
-    });
-
-    // TODO: is it needed here or can it be "global" ?
-    const salt = await bcrypt.genSalt(Number(config.salt));
-    const hash = await bcrypt.hash(newUser.password, salt);
-    newUser.password = hash;
-
-    await newUser
-      .save()
-      .then(() => {
-        return res.status(201).json({
-          status: "success",
-          msg: "User is now registered.",
+    try {
+      if (Object.keys(req.body).length < 6) {
+        return res.status(400).json({
+          status: "error",
+          msg: "All fields must be filled in.",
         });
-      })
-      .catch(
-        /* istanbul ignore next */ (err) => {
-          return res.status(500).json({
-            status: "error",
-            msg: err.message,
-          });
-        }
+      }
+
+      const sentProfilePicSize = Buffer.from(
+        profilePic.split(",")[1],
+        "base64"
       );
+
+      if (sentProfilePicSize.length > config.maxProfileSize) {
+        return res.status(400).json({
+          status: "error",
+          msg: `Profile Pic should not be bigger then ${config.maxProfileSize} bytes. It is ${sentProfilePicSize.length} bytes.`,
+        });
+      }
+
+      if (password !== passwordConfirmation) {
+        return res.status(400).json({
+          status: "error",
+          msg: "Passwords do not match.",
+        });
+      }
+
+      if (await User.findOne({ where: { userName: userName } }))
+        return res.status(400).json({
+          status: "error",
+          msg: "Username is already taken.",
+        });
+
+      if (await User.findOne({ where: { email: email } }))
+        return res.status(400).json({
+          status: "error",
+          msg: "E-mail already registered. Did you forget your pass?",
+        });
+
+      const newUser = new User({
+        firstName,
+        lastName,
+        userName,
+        email,
+        password,
+        profilePic,
+      });
+
+      // TODO: is it needed here or can it be "global" ?
+      const salt = await bcrypt.genSalt(Number(config.salt));
+      const hash = await bcrypt.hash(newUser.password, salt);
+      newUser.password = hash;
+
+      await newUser
+        .save()
+        .then(() => {
+          return res.status(201).json({
+            status: "success",
+            msg: "User is now registered.",
+          });
+        })
+        .catch(
+          /* istanbul ignore next */ (err) => {
+            return res.status(500).json({
+              status: "error",
+              msg: err.message,
+            });
+          }
+        );
+    } catch (error) {
+      LoggerInstance.error("Error:", error);
+      return res.status(500).json({
+        msg: "Unknown error.",
+        status: "error",
+      });
+    }
   });
 
   app.post("/users/login", (req, res) => {
