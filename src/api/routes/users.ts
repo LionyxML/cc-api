@@ -153,7 +153,7 @@ export default (app: Router) => {
         } else {
           return res.status(404).json({
             msg: "Incorrect password!",
-            success: false,
+            status: "error",
           });
         }
       });
