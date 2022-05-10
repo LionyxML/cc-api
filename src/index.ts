@@ -3,6 +3,7 @@ import express from "express";
 import config from "./config";
 import appLoader from "./loaders";
 import LoggerInstance from "./loaders/logger";
+import __ from "./loaders/i18n";
 
 const startServer = async () => {
   const app = express();
@@ -19,14 +20,16 @@ const startServer = async () => {
        | |__| |___  |_____|  / ___ \\|  __/| |
         \\____\\____|         /_/   \\_\\_|  |___|
 
-        🟢  Server port: ${config.port}
-        🟢  Server mode: ${config.mode} ${config.isDevMode() ? "🧪" : "🚀"}
+        🟢  ${__("server.port")} ${config.port}
+        🟢  ${__("server.mode")} ${config.mode} ${
+        config.isDevMode() ? "🧪" : "🚀"
+      }
 #####################################################
     `);
     })
     .on("error", (err) => {
       LoggerInstance.error(err);
-      LoggerInstance.error("⛔ Stopping API process...");
+      LoggerInstance.error(`⛔ ${__("stopping.api")}`);
       process.exit(1);
     });
 };

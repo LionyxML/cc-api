@@ -5,6 +5,7 @@ import User from "../../models/User";
 import config from "../../config";
 import passport from "passport";
 import LoggerInstance from "../../loaders/logger";
+import __ from "../../loaders/i18n";
 
 const route = Router();
 
@@ -37,7 +38,7 @@ export default (app: Router) => {
       if (Object.keys(req.body).length < 6) {
         return res.status(400).json({
           status: "error",
-          msg: "All fields must be filled in.",
+          msg: `${__("user.allfields")}`,
         });
       }
 
@@ -49,27 +50,31 @@ export default (app: Router) => {
       if (sentProfilePicSize.length > config.maxProfileSize) {
         return res.status(400).json({
           status: "error",
-          msg: `Profile Pic should not be bigger then ${config.maxProfileSize} bytes. It is ${sentProfilePicSize.length} bytes.`,
+          msg: `${__("profilepic.should.not.1")} ${
+            config.maxProfileSize
+          } __("profilepic.should.not.2")} ${
+            sentProfilePicSize.length
+          } __("profilepic.should.not.3")}`,
         });
       }
 
       if (password !== passwordConfirmation) {
         return res.status(400).json({
           status: "error",
-          msg: "Passwords do not match.",
+          msg: `${__("user.passwords.do.not.match")}`,
         });
       }
 
       if (await User.findOne({ where: { userName: userName } }))
         return res.status(400).json({
           status: "error",
-          msg: "Username is already taken.",
+          msg: `${__("user.taken")}`,
         });
 
       if (await User.findOne({ where: { email: email } }))
         return res.status(400).json({
           status: "error",
-          msg: "E-mail already registered. Did you forget your pass?",
+          msg: `${__("user.email.taken")}`,
         });
 
       const newUser = new User({
@@ -91,7 +96,7 @@ export default (app: Router) => {
         .then(() => {
           return res.status(201).json({
             status: "success",
-            msg: "User is now registered.",
+            msg: `${__("user.registered")}`,
           });
         })
         .catch(
@@ -105,7 +110,7 @@ export default (app: Router) => {
     } catch (error) {
       LoggerInstance.error("Error:", error);
       return res.status(500).json({
-        msg: "Unknown error.",
+        msg: `${__("unknown.error")}`,
         status: "error",
       });
     }
@@ -124,7 +129,7 @@ export default (app: Router) => {
     User.findOne({ where: { email: req.body.email } }).then((dbUser) => {
       if (!dbUser) {
         return res.status(404).json({
-          msg: "Username not found.",
+          msg: `${__("user.not.found")}`,
           status: "error",
         });
       }
@@ -146,13 +151,13 @@ export default (app: Router) => {
                 status: "success",
                 user: dbUser,
                 token: `Bearer ${token}`,
-                msg: "You're now logged in!",
+                msg: `${__("user.loggedin")}`,
               });
             }
           );
         } else {
           return res.status(404).json({
-            msg: "Incorrect password!",
+            msg: `${__("user.incorrect.password")}`,
             status: "error",
           });
         }

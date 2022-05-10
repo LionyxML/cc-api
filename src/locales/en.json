@@ -1,0 +1,23 @@
+{
+  "loading": "Loading API...",
+  "sequelize.loaded": "Sequelize DB ORM loaded",
+  "express.loaded": "Node Express loaded",
+  "server.port": "Server Port",
+  "server.mode": "Server Mode",
+  "stopping.api": "Stopping API process...",
+  "not.env": "Couldn't find .env file",
+  "user.not.found": "Username not found.",
+  "user.loggedin": "You're now logged in!",
+  "user.incorrect.password": "Incorrect password!",
+  "user.allfields": "All fields must be filled in.",
+  "user.passwords.do.not.match": "Passwords do not match.",
+  "user.taken": "Username is already taken.",
+  "user.email.taken": "E-mail already registered. Did you forget your pass?",
+  "user.registered": "User is now registered.",
+  "unknown.error": "Unknown error.",
+  "profilepic.should.not.1": "Profile Pic should not be bigger then",
+  "profilepic.should.not.2": "bytes. It is",
+  "profilepic.should.not.3": "bytes.",
+  "apiserver": "CC API server",
+  "isUp": "is up and running..."
+}

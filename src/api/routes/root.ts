@@ -1,4 +1,5 @@
 import { Router } from "express";
+import __ from "../../loaders/i18n";
 
 const route = Router();
 
@@ -13,7 +14,7 @@ const rootHTML = `
         font-family: Arial, Helvetica, sans-serif;
         font-size: 3rem;"
     >
-        <pre>CC API server <br> is up and running...</pre>
+        <pre>${__("apiserver")} <br> ${__("isUp")}.</pre>
     </div>
 `;
 

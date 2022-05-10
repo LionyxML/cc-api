@@ -1,0 +1,23 @@
+{
+  "loading": "Carregando API...",
+  "sequelize.loaded": "ORM DB Sequelize carregado ",
+  "express.loaded": "Node Express carregado",
+  "server.port": "Porta do Servidor",
+  "server.mode": "Modo do Servidor",
+  "stopping.api": "Parando o processo da API...",
+  "not.env": "Arquivo .env não encontrado",
+  "user.not.found": "Usuário não encontrado.",
+  "user.loggedin": "Você está logado!",
+  "user.incorrect.password": "Senha incorreta!",
+  "user.allfields": "Todos os campos precisam ser preenchidos!",
+  "user.passwords.do.not.match": "Senhas não conferem.",
+  "user.taken": "Nome de usuário já está em uso.",
+  "user.email.taken": "E-mail já registrado. Você esqueceu sua senha?",
+  "user.registered": "Usuário registrado com sucesso.",
+  "unknown.error": "Erro desconhecido.",
+  "profilepic.should.not.1": "A figura de avatar não pode ser maior do que",
+  "profilepic.should.not.2": "bytes. Essa tem",
+  "profilepic.should.not.3": "bytes.",
+  "apiserver": "Servidor API CC",
+  "isUp": "está de pé e rodando..."
+}
