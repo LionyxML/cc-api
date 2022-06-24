@@ -3,6 +3,7 @@ import Certificate from "../../models/Certificate";
 import config from "../../config";
 import passport from "passport";
 import jwt from "jsonwebtoken";
+import __ from "../../loaders/i18n";
 
 const route = Router();
 
@@ -50,7 +51,7 @@ export default (app: Router) => {
       )
         return res.status(400).json({
           status: "error",
-          msg: "User already have a certificate with this filename.",
+          msg: `${__("certificate.filenameTaken")}`,
         });
 
       const newCertificate = new Certificate({
@@ -64,14 +65,14 @@ export default (app: Router) => {
         .then(() => {
           return res.status(201).json({
             status: "success",
-            msg: "Certificate is uploaded.",
+            msg: `${__("certificate.uploaded")}`,
           });
         })
         .catch(
           /* istanbul ignore next */ () =>
             res.status(400).json({
               status: "error",
-              msg: "Error on saving... contact sys admin",
+              msg: `${__("certificate.error")}`,
             })
         );
     }
@@ -114,7 +115,7 @@ export default (app: Router) => {
         /* istanbul ignore next */ () =>
           res.status(400).json({
             status: "error",
-            msg: "Error on getting certificates.",
+            msg: `${__("certificate.download.error")}`,
           });
       }
     }
@@ -159,7 +160,7 @@ export default (app: Router) => {
         /* istanbul ignore next */ () => {
           res.status(400).json({
             status: "error",
-            msg: "Error on deleting certificates",
+            msg: `${__("certificate.download.deleteError")}`,
           });
         };
       }

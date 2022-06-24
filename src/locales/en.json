@@ -19,5 +19,10 @@
   "profilepic.should.not.2": "bytes. It is",
   "profilepic.should.not.3": "bytes.",
   "apiserver": "CC API server",
-  "isUp": "is up and running..."
+  "isUp": "is up and running...",
+  "certificate.filenameTaken": "User already have a certificate with this filename.",
+  "certificate.uploaded": "Certificate is uploaded.",
+  "certificate.error": "Error on saving... contact sys admin",
+  "certificate.download.error": "Error on getting certificates.",
+  "certificate.download.deleteError": "Error on deleting certificates"
 }
