@@ -12,7 +12,9 @@ export const sequelize = new Sequelize(dbName, user, pass, {
 });
 
 export default async () => {
-  // await sequelize.sync();
-  if (config.isDevMode() || config.isTestMode())
+  if (config.isDevMode() || config.isTestMode()) {
     await sequelize.sync({ force: true });
+  } else {
+    await sequelize.sync();
+  }
 };

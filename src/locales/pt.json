@@ -15,6 +15,7 @@
   "user.email.taken": "E-mail já registrado. Você esqueceu sua senha?",
   "user.registered": "Usuário registrado com sucesso.",
   "unknown.error": "Erro desconhecido.",
+  "profilepic.required": "A figura de avatar é obrigatória!",
   "profilepic.should.not.1": "A figura de avatar não pode ser maior do que",
   "profilepic.should.not.2": "bytes. Essa tem",
   "profilepic.should.not.3": "bytes.",

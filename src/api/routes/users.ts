@@ -31,14 +31,18 @@ export default (app: Router) => {
       passwordConfirmation,
       profilePic,
     } = req.body;
-
-    console.log("recebido:", req.body);
-
     try {
       if (Object.keys(req.body).length < 6) {
         return res.status(400).json({
           status: "error",
           msg: `${__("user.allfields")}`,
+        });
+      }
+
+      if (!profilePic) {
+        return res.status(400).json({
+          status: "error",
+          msg: `${__("profilepic.required")}`,
         });
       }
 

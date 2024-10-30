@@ -15,6 +15,7 @@
   "user.email.taken": "E-mail already registered. Did you forget your pass?",
   "user.registered": "User is now registered.",
   "unknown.error": "Unknown error.",
+  "profilepic.required": "Profile Pic is required",
   "profilepic.should.not.1": "Profile Pic should not be bigger then",
   "profilepic.should.not.2": "bytes. It is",
   "profilepic.should.not.3": "bytes.",

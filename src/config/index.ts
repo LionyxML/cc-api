@@ -31,7 +31,7 @@ export default {
     user: isDevMode() ? "admin" : process.env.DB_USER || "",
     pass: isDevMode() ? "123456" : process.env.DB_PASS || "",
     host: isDevMode()
-      ? "./dist/db/db.sqlide.dev"
+      ? "./dist/db/db.sqlite.dev"
       : process.env.DB_PATH || "./dist/db/db.sqlite.prod",
   },
   isDevMode: isDevMode,
